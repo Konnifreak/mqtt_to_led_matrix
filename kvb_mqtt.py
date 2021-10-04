@@ -51,7 +51,7 @@ class kvb_matrix(object):
         font_big = graphics.Font() 
         font_big.LoadFont("/home/pi/rpi-rgb-led-matrix/fonts/9x15.bdf")
 
-        graphics.DrawText(offscreen_canvas, font_small, 0, 0, cyan, "text")
+        graphics.DrawText(offscreen_canvas, font_small, 50, 50, cyan, "text")
 
         offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
         print("End of Matrix")
