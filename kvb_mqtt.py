@@ -44,14 +44,12 @@ def print_led_matrix(Linie, message, Haltestelle):
     
         graphics.DrawText(offscreen_canvas, font_small, 0, 7, cyan, Linie)
         graphics.DrawText(offscreen_canvas, font_small, pos_scroll, 18, cyan, message)
-        graphics.DrawText(offscreen_canvas, font_small, pos_scroll, 26, cyan, Haltestelle)
+        len = graphics.DrawText(offscreen_canvas, font_small, pos_scroll, 26, cyan, Haltestelle)
 
         pos_scroll -= 1
 
-        if pos_scroll + len(message) == 0:
+        if pos_scroll + len == 0:
             pos_scroll = 64
-        
-        
         
         offscreen_canvas = matrix.SwapOnVSync(offscreen_canvas)
         time.sleep(0.05)
