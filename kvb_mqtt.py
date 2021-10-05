@@ -51,9 +51,11 @@ def print_led_matrix(Linie, message, Haltestelle):
         if pos_scroll + len(message) == 0:
             pos_scroll = 64
         
-        offscreen_canvas.Clear()
-        time.sleep(0.05)
+        
+        
         offscreen_canvas = matrix.SwapOnVSync(offscreen_canvas)
+        time.sleep(0.05)
+        offscreen_canvas.Clear()
 
 
     print("End of Matrix")
