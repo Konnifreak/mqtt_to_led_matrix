@@ -22,7 +22,7 @@ def reset_matrix():
     matrix.Clear()
     offscreen_canvas.Clear()  
 
-def print_led_matrix(text):
+def print_led_matrix(Linie, message, Haltestelle):
  
     cyan = graphics.Color(0, 127, 127)
 
@@ -37,9 +37,12 @@ def print_led_matrix(text):
     font_big = graphics.Font() 
     font_big.LoadFont("/home/pi/rpi-rgb-led-matrix/fonts/9x15.bdf")
 
-    graphics.DrawText(offscreen_canvas, font_small, 0, 7, cyan, text)
+    graphics.DrawText(offscreen_canvas, font_small, 0, 7, cyan, Linie)
 
+    graphics.DrawText(offscreen_canvas, font_small, 0, 18, cyan, message)
 
+    graphics.DrawText(offscreen_canvas, font_small, 0, 26, cyan, Haltestelle)
+    
     offscreen_canvas = matrix.SwapOnVSync(offscreen_canvas)
     print("End of Matrix")
 
@@ -61,7 +64,7 @@ def print_infos(msg):
     message = payload["message"]
     Haltestelle = payload["stations"]
 
-    print_led_matrix(Linie)
+    print_led_matrix(Linie, message, Haltestelle)
     time.sleep(10)
     reset_matrix()
 
