@@ -10,39 +10,38 @@ broker= "192.168.178.32"
 port = 1883
 topic = "KVB_status/#"
 
-class kvb_matrix(object):
-    def __init__(self):
-        super(kvb_matrix, self).__init__()
-    def reset_matrix(self):
-        self.matrix.Clear()
-        offscreen_canvas.Clear()  
+def inti_matrix():
+    options = RGBMatrixOptions()
+    options.rows = 32
+    options.cols = 64
+    options.hardware_mapping = 'adafruit-hat'
+    global matrix
+    matrix = RGBMatrix(options = options)
 
-    def init_led_matrix(self):
-        options = RGBMatrixOptions()
-        options.rows = 32
-        options.cols = 64
-        options.hardware_mapping = 'adafruit-hat' 
+def reset_matrix():
+    matrix.Clear()
+    offscreen_canvas.Clear()  
 
-        self.matrix = RGBMatrix(options = options)
+def print_led_matrix(text):
+ 
+    cyan = graphics.Color(0, 127, 127)
 
-        cyan = graphics.Color(0, 127, 127)
+    global offscreen_canvas
 
-        global offscreen_canvas
+    offscreen_canvas = matrix.CreateFrameCanvas()
 
-        offscreen_canvas = self.matrix.CreateFrameCanvas()
+    font_medium = graphics.Font()
+    font_medium.LoadFont("/home/pi/rpi-rgb-led-matrix/fonts/7x13.bdf")
+    font_small = graphics.Font()
+    font_small.LoadFont("/home/pi/rpi-rgb-led-matrix/fonts/6x10.bdf")
+    font_big = graphics.Font() 
+    font_big.LoadFont("/home/pi/rpi-rgb-led-matrix/fonts/9x15.bdf")
 
-        font_medium = graphics.Font()
-        font_medium.LoadFont("/home/pi/rpi-rgb-led-matrix/fonts/7x13.bdf")
-        font_small = graphics.Font()
-        font_small.LoadFont("/home/pi/rpi-rgb-led-matrix/fonts/6x10.bdf")
-        font_big = graphics.Font() 
-        font_big.LoadFont("/home/pi/rpi-rgb-led-matrix/fonts/9x15.bdf")
+    graphics.DrawText(offscreen_canvas, font_small, 0, 7, cyan, text)
 
-        graphics.DrawText(offscreen_canvas, font_small, 50, 50, cyan, "text")
 
-        while True:
-            offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
-            print("End of Matrix")
+    offscreen_canvas = matrix.SwapOnVSync(offscreen_canvas)
+    print("End of Matrix")
 
 def connect_mqtt() -> mqtt:
     def on_connect(client, userdata, flags, rc):
@@ -61,6 +60,11 @@ def print_infos(msg):
     Linie = payload["Linie"]
     message = payload["message"]
     Haltestelle = payload["stations"]
+
+    print_led_matrix(Linie)
+    time.sleep(10)
+    reset_matrix()
+
     print(Linie)
     print(message)
     print(Haltestelle)
@@ -76,8 +80,7 @@ def subscribe(client: mqtt):
 
 
 def run():
-    my_kvb_matrix = kvb_matrix()
-    my_kvb_matrix.init_led_matrix()
+    inti_matrix()
     client = connect_mqtt()
     subscribe(client)
     client.loop_forever()
