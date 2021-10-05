@@ -21,29 +21,16 @@ class kvb_matrix(object):
         options = RGBMatrixOptions()
         options.rows = 32
         options.cols = 64
-        options.chain_length = 1
-        options.parallel = 1
         options.hardware_mapping = 'adafruit-hat' 
 
         self.matrix = RGBMatrix(options = options)
 
-        white = graphics.Color(255, 255, 255)
-        gray = graphics.Color(127, 127, 127)
-        green = graphics.Color(0, 150, 0)
-        yellow = graphics.Color(127, 127, 0)
-        red = graphics.Color(150, 0, 0)
-        blue = graphics.Color(0, 0, 150)
-        magenta = graphics.Color(127, 0, 127)
         cyan = graphics.Color(0, 127, 127)
-        dim = graphics.Color(10, 10, 10)
 
         global offscreen_canvas
 
         offscreen_canvas = self.matrix.CreateFrameCanvas()
-        font = graphics.Font()
 
-        width = 128
-        height = 64
         font_medium = graphics.Font()
         font_medium.LoadFont("/home/pi/rpi-rgb-led-matrix/fonts/7x13.bdf")
         font_small = graphics.Font()
