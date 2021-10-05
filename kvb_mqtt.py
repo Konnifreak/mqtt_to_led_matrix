@@ -38,7 +38,7 @@ def print_led_matrix(Linie, message, Haltestelle):
     font_big.LoadFont("/home/pi/rpi-rgb-led-matrix/fonts/9x15.bdf")
 
     pos_scroll = 0
-    t_end = time.time() + 60 * 2
+    t_end = time.time() + 60
 
     while time.time() < t_end:
     
@@ -51,6 +51,7 @@ def print_led_matrix(Linie, message, Haltestelle):
         if pos_scroll + len(message) == 0:
             pos_scroll = 64
 
+        time.sleep(0.05)
         offscreen_canvas = matrix.SwapOnVSync(offscreen_canvas)
 
 
