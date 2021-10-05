@@ -42,7 +42,7 @@ def print_led_matrix(Linie, message, Haltestelle):
     graphics.DrawText(offscreen_canvas, font_small, 0, 18, cyan, message)
 
     graphics.DrawText(offscreen_canvas, font_small, 0, 26, cyan, Haltestelle)
-    
+
     offscreen_canvas = matrix.SwapOnVSync(offscreen_canvas)
     print("End of Matrix")
 
@@ -65,7 +65,7 @@ def print_infos(msg):
     Haltestelle = payload["stations"]
 
     print_led_matrix(Linie, message, Haltestelle)
-    time.sleep(10)
+    time.sleep(50)
     reset_matrix()
 
     print(Linie)
