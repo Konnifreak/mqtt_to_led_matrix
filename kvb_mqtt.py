@@ -40,8 +40,9 @@ class kvb_matrix(object):
 
         graphics.DrawText(offscreen_canvas, font_small, 50, 50, cyan, "text")
 
-        offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
-        print("End of Matrix")
+        while true:
+            offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
+            print("End of Matrix")
 
 def connect_mqtt() -> mqtt:
     def on_connect(client, userdata, flags, rc):
