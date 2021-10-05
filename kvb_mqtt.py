@@ -24,7 +24,8 @@ def reset_matrix():
 
 def print_led_matrix(Linie, message, Haltestelle):
  
-    cyan = graphics.Color(0, 127, 127)
+    white = graphics.Color(255, 255, 255)
+    red = graphics.Color(150, 0, 0)
 
     global offscreen_canvas
 
@@ -42,9 +43,9 @@ def print_led_matrix(Linie, message, Haltestelle):
 
     while time.time() < t_end:
     
-        graphics.DrawText(offscreen_canvas, font_small, 0, 7, cyan, Linie)
-        graphics.DrawText(offscreen_canvas, font_small, pos_scroll, 18, cyan, message)
-        len = graphics.DrawText(offscreen_canvas, font_small, pos_scroll, 26, cyan, Haltestelle)
+        graphics.DrawText(offscreen_canvas, font_small, 0, 7, red, Linie)
+        graphics.DrawText(offscreen_canvas, font_small, pos_scroll, 18, white, message)
+        len = graphics.DrawText(offscreen_canvas, font_small, pos_scroll, 28, white, Haltestelle)
 
         pos_scroll -= 1
 
