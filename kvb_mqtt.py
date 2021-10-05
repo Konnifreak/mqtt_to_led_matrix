@@ -40,7 +40,7 @@ class kvb_matrix(object):
 
         graphics.DrawText(offscreen_canvas, font_small, 50, 50, cyan, "text")
 
-        while true:
+        while True:
             offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
             print("End of Matrix")
 
