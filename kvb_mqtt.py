@@ -37,13 +37,23 @@ def print_led_matrix(Linie, message, Haltestelle):
     font_big = graphics.Font() 
     font_big.LoadFont("/home/pi/rpi-rgb-led-matrix/fonts/9x15.bdf")
 
-    graphics.DrawText(offscreen_canvas, font_small, 0, 7, cyan, Linie)
+    pos_scroll = 0
+    t_end = time.time() + 60 * 2
 
-    graphics.DrawText(offscreen_canvas, font_small, 0, 18, cyan, message)
+    while time.time() < t_end:
+    
+        graphics.DrawText(offscreen_canvas, font_small, 0, 7, cyan, Linie)
+        graphics.DrawText(offscreen_canvas, font_small, pos_scroll, 18, cyan, message)
+        graphics.DrawText(offscreen_canvas, font_small, pos_scroll, 26, cyan, Haltestelle)
 
-    graphics.DrawText(offscreen_canvas, font_small, 0, 26, cyan, Haltestelle)
+        pos_scroll -= 1
 
-    offscreen_canvas = matrix.SwapOnVSync(offscreen_canvas)
+        if pos_scroll + len(message) == 0:
+            pos_scroll = 64
+
+        offscreen_canvas = matrix.SwapOnVSync(offscreen_canvas)
+
+
     print("End of Matrix")
 
 def connect_mqtt() -> mqtt:
@@ -65,12 +75,7 @@ def print_infos(msg):
     Haltestelle = payload["stations"]
 
     print_led_matrix(Linie, message, Haltestelle)
-    time.sleep(50)
     reset_matrix()
-
-    print(Linie)
-    print(message)
-    print(Haltestelle)
     
 
 def subscribe(client: mqtt):
