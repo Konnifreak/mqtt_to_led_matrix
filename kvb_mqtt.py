@@ -70,21 +70,18 @@ def connect_mqtt() -> mqtt:
     client.on_connect = on_connect
     client.connect(broker, port)
     return client
-
-def print_infos(msg):
-    payload = json.loads(msg.payload.decode())
-    Linie = payload["Linie"]
-    message = payload["message"]
-    Haltestelle = payload["stations"]
-
-    print_led_matrix(Linie, message, Haltestelle)
-    reset_matrix()
     
 
 def subscribe(client: mqtt):
     def on_message(client, userdata, msg):
         print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
-        print_infos(msg)
+        payload = json.loads(msg.payload.decode())
+        Linie = payload["Linie"]
+        message = payload["message"]
+        Haltestelle = payload["stations"]
+
+        print_led_matrix(Linie, message, Haltestelle)
+        reset_matrix()
 
     client.subscribe(topic)
     client.on_message = on_message
