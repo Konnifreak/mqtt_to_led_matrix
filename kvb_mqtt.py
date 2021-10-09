@@ -90,8 +90,9 @@ def subscribe(client: mqtt):
 def run():
     inti_matrix()
     client = connect_mqtt()
+    client.loop_start()
     subscribe(client)
-    client.loop_forever()
+    
 
 
 if __name__ == '__main__':
