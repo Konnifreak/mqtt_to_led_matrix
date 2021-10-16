@@ -83,17 +83,15 @@ def subscribe(client: mqtt):
         print_led_matrix(Linie, message, Haltestelle)
         reset_matrix()
 
-    client.subscribe(topic)
+    client.subscribe(topic,2)
     client.on_message = on_message
 
 
 def run():
     inti_matrix()
     client = connect_mqtt()
-    while True:
-        client.loop_start()
-        subscribe(client)
-    
+    subscribe(client)
+    client.loop_forever()
 
 
 if __name__ == '__main__':
