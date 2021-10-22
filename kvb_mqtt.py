@@ -64,16 +64,16 @@ def check_topic(msg):
 
     if msg.topic.split("/")[1].isnumeric():
         print(msg.topic.split("/")[1])
-        return true
+        return True
     elif msg.topic.split("/")[1] == "display_status":
         print(msg.topic.split("/")[1])
         if msg.payload.decode() == "ON":
             status = True
         else:
             status = False
-        return false
+        return False
     else:
-        return false
+        return False
     
 
 def connect_mqtt() -> mqtt:
