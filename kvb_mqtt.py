@@ -9,7 +9,7 @@ from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 broker= "192.168.178.32"
 port = 1883
 topic = "KVB_status/#"
-global status
+status = True
 
 def inti_matrix():
     options = RGBMatrixOptions()
@@ -61,7 +61,7 @@ def print_led_matrix(Linie, message, Haltestelle):
     print("End of Matrix")
 
 def check_topic(msg):
-
+    global status
     if msg.topic.split("/")[1].isnumeric():
         return True
     elif msg.topic.split("/")[1] == "display_status":
@@ -108,7 +108,6 @@ def subscribe(client: mqtt):
 
 def run():
     inti_matrix()
-    status = True
     client = connect_mqtt()
     subscribe(client)
     client.loop_forever()
