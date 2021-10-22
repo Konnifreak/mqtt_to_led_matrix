@@ -69,8 +69,10 @@ def check_topic(msg):
         print(msg.topic.split("/")[1])
         if msg.payload.decode() == "ON":
             status = True
+            print(status)
         else:
             status = False
+            print(status)
         return False
     else:
         return False
