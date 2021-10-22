@@ -92,6 +92,7 @@ def connect_mqtt() -> mqtt:
 def subscribe(client: mqtt):
     def on_message(client, userdata, msg):
         print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+        print(status)
         if check_topic(msg) and status == True:
             payload = json.loads(msg.payload.decode())
             Linie = payload["Linie"]
