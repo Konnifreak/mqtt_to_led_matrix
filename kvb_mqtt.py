@@ -9,6 +9,7 @@ from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 broker= "192.168.178.32"
 port = 1883
 topic = "KVB_status/#"
+status = True
 
 def inti_matrix():
     options = RGBMatrixOptions()
@@ -59,6 +60,22 @@ def print_led_matrix(Linie, message, Haltestelle):
 
     print("End of Matrix")
 
+def check_topic(msg):
+
+    if msg.topic.split("/")[1].isnumeric():
+        print(msg.topic.split("/")[1])
+        return true
+    elif msg.topic.spit("/")[1] == "display_status":
+        print(msg.topic.split("/")[1])
+        if msg.payload.decode() == "ON":
+            status = True
+        else:
+            status = False
+        return false
+    else:
+        return false
+    
+
 def connect_mqtt() -> mqtt:
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
@@ -75,13 +92,14 @@ def connect_mqtt() -> mqtt:
 def subscribe(client: mqtt):
     def on_message(client, userdata, msg):
         print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
-        payload = json.loads(msg.payload.decode())
-        Linie = payload["Linie"]
-        message = payload["message"]
-        Haltestelle = payload["stations"]
+        if check_topic(msg) and status == True:
+            payload = json.loads(msg.payload.decode())
+            Linie = payload["Linie"]
+            message = payload["message"]
+            Haltestelle = payload["stations"]
 
-        print_led_matrix(Linie, message, Haltestelle)
-        reset_matrix()
+            print_led_matrix(Linie, message, Haltestelle)
+            reset_matrix()
 
     client.subscribe(topic,2)
     client.on_message = on_message
